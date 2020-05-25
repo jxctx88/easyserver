@@ -1,0 +1,93 @@
+<html>
+<head>
+    <title>edit</title>
+
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        function edit() {
+            $.ajax({
+                //几个参数需要注意一下
+                type: "POST",//方法类型
+                // dataType: "json",//预期服务器返回的数据类型
+                url: "/mock/editResponse" ,//url
+                data: $('#form1').serialize(),
+                success: function (result) {
+                  if (result.code==1){
+                      window.close()
+                  }
+                },
+                error : function() {
+                    alert("error！");
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+
+
+<form id="form1" >
+
+
+    <table >
+        <tr>
+            <td align="right">
+                method:
+            </td>
+            <td>
+                <input type="text" readonly="readonly" value="{{.Method}}"/>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                description:
+            </td>
+            <td>
+                <input type="text" name="description" value="{{.Description}}"/>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                url:
+            </td>
+            <td>
+                <input type="text" readonly="readonly" value="{{.UrlPath}}"/>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                params:
+            </td>
+            <td>
+                <textarea readonly="readonly" cols="100" rows="5"
+                          style="text-align: left">{{range $k, $v := .Params}}{{$k}}:{{$v}}&{{end}}</textarea>
+
+
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                response:
+            </td>
+            <td>
+                <textarea name="responseText" cols="100" rows="5">{{.ResponseText}}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+            </td>
+            <td>
+                <input  type="button" onclick="edit()" style="background-color: #8f8" value="submit"/>
+
+            </td>
+        </tr>
+
+        <input type="hidden" name="responseInfoId"  value="{{.ResponseInfoId}}"/>
+    </table>
+</form>
+
+
+</body>
+</html>
