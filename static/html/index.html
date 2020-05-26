@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>index</title>
+    <title>easyserver index</title>
     <style type="text/css">
 
         table {
@@ -41,7 +41,7 @@
 
 </script>
 <body>
-<a href="/mock/config">config</a>
+<a href="/mock/config" style="font-size: large">My config</a>
 <table width="90%" class="table">
     <tr>
         <th>
@@ -79,7 +79,7 @@
         {{$v.UrlPath}}
         </td>
         <td >
-        {{jiequ $v.ResponseText}}
+        {{subLongText $v.ResponseText}}
         </td>
         <td>
             <img width="20" height="20" src="static/img/edit.png" onclick="saveItem({{$v.Id}})">

@@ -2,10 +2,8 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/xingliuhua/easyserver/dao"
-	"github.com/xingliuhua/easyserver/db"
+	"github.com/xingliuhua/easyserver/cache"
 	"github.com/xingliuhua/easyserver/model"
 	"github.com/xingliuhua/easyserver/util"
 	"net/http"
@@ -15,8 +13,6 @@ import (
 func HandleAll(c *gin.Context) {
 	url := c.Request.URL
 	m := make(map[string][]string)
-	//s, i := c.GetPostForm("name")
-	//fmt.Println(s,i)
 	c.Request.ParseForm()
 	c.Request.ParseMultipartForm(10000)
 	switch c.Request.Method {
@@ -43,19 +39,18 @@ func HandleAll(c *gin.Context) {
 	history.GetKey() // 生成key
 
 	// 判断是否配置的有该请求，如果有则设置响应，没有则返回未配置
-	_, b := db.ResponseInfoKeyMap[history.Key]
+	b := cache.HasConfigedRequest(history.Key)
 	if !b {
 		hs := gin.H{"code": 0, "msg": "not set data"}
 		bytes, _ := json.Marshal(hs)
 		history.ResponseText = string(bytes)
-		fmt.Println(history)
-		db.AddHistory(history)
+		cache.AddHistory2Cache(history)
 		c.JSON(http.StatusOK, hs)
 		return
 	}
-	_, info := dao.GetResponseInfo(history.Key)
+	_, info := cache.GetResponseInfo(history.Key)
 	history.ResponseText = info.ResponseText
-	db.AddHistory(history)
+	cache.AddHistory2Cache(history)
 
 	c.String(http.StatusOK, info.ResponseText)
 }

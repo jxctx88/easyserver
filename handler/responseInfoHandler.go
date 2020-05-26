@@ -2,10 +2,9 @@ package handler
 
 import (
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/xingliuhua/easyserver/cache"
 	"github.com/xingliuhua/easyserver/dao"
-	"github.com/xingliuhua/easyserver/db"
 	"github.com/xingliuhua/easyserver/model"
 	"github.com/xingliuhua/easyserver/util"
 	"net/http"
@@ -17,25 +16,35 @@ func AddResponseInfo(c *gin.Context) {
 	historyId, b := c.GetPostForm("historyId")
 	description, b := c.GetPostForm("description")
 	if !b {
+		WriterError(errors.New("description missed"), c)
 		return
 	}
 	responseText, b := c.GetPostForm("responseText")
 	if !b {
+		WriterError(errors.New("responseText missed"), c)
 		return
 	}
 
-	err, history := dao.GetHistoryById(historyId)
+	err, history := cache.GetHistoryById(historyId)
 	if err != nil {
 		return
 	}
-	if hasResponseId && responseId != ""{
+	if hasResponseId && responseId != "" {
 		// 修改
-		_, responseInfo := dao.GetResponseInfoById(responseId)
+		_, responseInfo := cache.GetResponseInfoById(responseId)
 		responseInfo.ResponseText = responseText
 		responseInfo.Description = description
+		// chache层修改
+		cache.UpdateResponseInfo2Cache(responseInfo)
+		// dao层修改
+		r := dao.UpdateResponseInfo(responseInfo)
+		if !r {
+			WriterError(errors.New("edit failed"), c)
+			return
+		}
 	} else {
 		// 添加
-		responseInfoNew := &model.ResponseInfo{
+		responseInfoNew := model.ResponseInfo{
 			Id:           util.GenUUID(),
 			Method:       history.Method,
 			Time:         time.Now().Unix(),
@@ -45,20 +54,25 @@ func AddResponseInfo(c *gin.Context) {
 			Key:          history.Key,
 			Description:  description,
 		}
-		db.AddResponseInfo(responseInfoNew)
-		db.ResponseInfoKeyMap[history.Key] = nil
+		cache.AddResponseInfo2Cache(responseInfoNew)
+		//  dao层添加
+		r := dao.AddResponseInfo(responseInfoNew)
+		if !r {
+			WriterError(errors.New("add failed"), c)
+			return
+		}
 	}
-	c.JSON(http.StatusOK,gin.H{"code":1,"msg":"success"})
+	c.JSON(http.StatusOK, gin.H{"code": 1, "msg": "success"})
 
 }
 func DelResponseInfo(c *gin.Context) {
-	id:= c.Param("id")
-	fmt.Println("要删除的id",id)
+	id := c.Param("id")
+	cache.DeleteResponseInfo(id)
 	err := dao.DeleteResponseInfo(id)
-	if err!=nil{
-		WriterError(err,c)
+	if err != nil {
+		WriterError(err, c)
 	}
-	c.JSON(http.StatusOK,gin.H{"code":1,"msg":"success"})
+	c.JSON(http.StatusOK, gin.H{"code": 1, "msg": "success"})
 }
 
 func UpdateResponseInfo(c *gin.Context) {
@@ -67,7 +81,7 @@ func UpdateResponseInfo(c *gin.Context) {
 		WriterError(errors.New("id not exist"), c)
 		return
 	}
-	_, responseInfo := dao.GetResponseInfoById(responseId)
+	_, responseInfo := cache.GetResponseInfoById(responseId)
 	description, b := c.GetPostForm("description")
 	if !b {
 		return
@@ -79,5 +93,13 @@ func UpdateResponseInfo(c *gin.Context) {
 
 	responseInfo.ResponseText = responseText
 	responseInfo.Description = description
-	c.JSON(http.StatusOK,gin.H{"code":1,"msg":"success"})
+	// cache层修改
+	cache.UpdateResponseInfo2Cache(responseInfo)
+	// dao层修改
+	r := dao.UpdateResponseInfo(responseInfo)
+	if !r {
+		WriterError(errors.New("edit failed"), c)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": 1, "msg": "success"})
 }

@@ -8,9 +8,9 @@
         function edit() {
             $.ajax({
                 //几个参数需要注意一下
-                type: "POST",//方法类型
+                type: "PUT",//方法类型
                 // dataType: "json",//预期服务器返回的数据类型
-                url: "/mock/editResponse" ,//url
+                url: "/mock/responses" ,//url
                 data: $('#form1').serialize(),
                 success: function (result) {
                   if (result.code==1){
@@ -79,7 +79,7 @@
 
             </td>
             <td>
-                <input  type="button" onclick="edit()" style="background-color: #8f8" value="submit"/>
+                <input  type="button" onclick="edit()" style="background-color: #339900" value="submit"/>
 
             </td>
         </tr>

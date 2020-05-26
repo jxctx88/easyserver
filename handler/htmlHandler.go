@@ -3,25 +3,25 @@ package handler
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
-	"github.com/xingliuhua/easyserver/dao"
-	"github.com/xingliuhua/easyserver/db"
+	"github.com/xingliuhua/easyserver/cache"
+	"github.com/xingliuhua/easyserver/util"
 	"net/http"
 	"time"
 )
 
-func AddOrUpdateResponseInfoHtml(c *gin.Context)  {
+func AddOrUpdateResponseInfoHtml(c *gin.Context) {
 	historyId, b := c.GetQuery("id")
 	if !b {
 		WriterError(errors.New("not has id"), c)
 		return
 	}
-	err, history := dao.GetHistoryById(historyId)
+	err, history := cache.GetHistoryById(historyId)
 	if err != nil {
 		WriterError(err, c)
 		return
 	}
 
-	err, resInfo := dao.GetResponseInfo(history.Key)
+	err, resInfo := cache.GetResponseInfo(history.Key)
 	tmp := struct {
 		HistoryId      string
 		ResponseInfoId string
@@ -44,9 +44,14 @@ func AddOrUpdateResponseInfoHtml(c *gin.Context)  {
 
 	c.HTML(http.StatusOK, "add.html", tmp)
 }
-func UpdateResponseInfoHtml(c *gin.Context)  {
-	responseId,_:=c.GetQuery("id")
-	_, info := dao.GetResponseInfoById(responseId)
+
+func IndexHtml(c *gin.Context) {
+	tmp := util.Reverse(cache.GetAllHistoryList())
+	c.HTML(http.StatusOK, "index.html", tmp)
+}
+func UpdateResponseInfoHtml(c *gin.Context) {
+	responseId, _ := c.GetQuery("id")
+	_, info := cache.GetResponseInfoById(responseId)
 	tmp := struct {
 		ResponseInfoId string
 		Method         string
@@ -64,17 +69,17 @@ func UpdateResponseInfoHtml(c *gin.Context)  {
 
 	c.HTML(http.StatusOK, "edit.html", tmp)
 }
-func ConfigHtml(c *gin.Context)  {
+func ConfigHtml(c *gin.Context) {
 
-	c.HTML(http.StatusOK, "config.html", db.ResponseInfoList)
+	c.HTML(http.StatusOK, "config.html", cache.GetAllResponseInfo())
 }
-func Jiequ(str string) string{
-	if len(str)>40{
-		return str[:40]+"..."
+func SubLongText(str string) string {
+	if len(str) > 40 {
+		return str[:40] + "..."
 	}
 	return str
 }
-func FormatTime(t int64) string{
+func FormatTime(t int64) string {
 	tm := time.Unix(t, 0)
 	format := tm.Format("2006-01-02 15:04:05")
 	return format

@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>setting</title>
+    <title>easyserver setting</title>
     <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript">
         function addResponseInfo() {
@@ -13,6 +13,8 @@
                 success: function (result) {
                     if (result.code == 1) {
                         window.close()
+                    }else{
+                        alert(result.msg)
                     }
                 },
                 error: function () {
@@ -77,7 +79,7 @@
 
             </td>
             <td>
-                <input type="button" onclick="addResponseInfo()" style="background-color: #8f8" value="submit"/>
+                <input type="button" onclick="addResponseInfo()" style="background-color: #339900" value="submit"/>
             </td>
         </tr>
 
