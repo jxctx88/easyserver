@@ -61,7 +61,7 @@
             </td>
             <td>
                 <textarea readonly="readonly" cols="100" rows="5"
-                          style="text-align: left">{{range $k, $v := .Params}}{{$k}}:{{$v}}&{{end}}</textarea>
+                          style="text-align: left">{{formatParams .Params}}</textarea>
 
 
             </td>

@@ -84,10 +84,12 @@ func UpdateResponseInfo(c *gin.Context) {
 	_, responseInfo := cache.GetResponseInfoById(responseId)
 	description, b := c.GetPostForm("description")
 	if !b {
+		WriterError(errors.New("description missed"), c)
 		return
 	}
 	responseText, b := c.GetPostForm("responseText")
 	if !b {
+		WriterError(errors.New("responseText missed"), c)
 		return
 	}
 

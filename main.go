@@ -14,14 +14,16 @@ import (
 var runed bool
 
 func main() {
-	r := gin.Default()
+	//gin.SetMode(gin.ReleaseMode)
+	r := gin.New()
 	r.POST("/mock/responses", handler.AddResponseInfo)
 	r.DELETE("/mock/responses/:id", handler.DelResponseInfo)
 	r.PUT("/mock/responses", handler.UpdateResponseInfo)
 	r.Static("/mock/static", "./static")
 	r.SetFuncMap(template.FuncMap{
-		"subLongText": handler.SubLongText,
-		"formatTime":  handler.FormatTime,
+		"subLongText":  handler.SubLongText,
+		"formatTime":   handler.FormatTime,
+		"formatParams": handler.FormatParams,
 	})
 	r.LoadHTMLGlob("static/html/*.html")
 	//r.LoadHTMLFiles("static/html/index.html", "static/html/add.html", "static/html/config.html")

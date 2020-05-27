@@ -42,8 +42,9 @@ func LoadData() (err error) {
 			continue
 		}
 		cache.AddResponseInfo2Cache(*responseInfo)
-
 	}
+	// 按时间排序
+	cache.SortResponseInfoList()
 	return
 }
 func DataDirExists() bool {

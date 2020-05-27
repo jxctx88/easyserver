@@ -1,10 +1,10 @@
 package handler
 
 import (
+	"encoding/json"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/xingliuhua/easyserver/cache"
-	"github.com/xingliuhua/easyserver/util"
 	"net/http"
 	"time"
 )
@@ -46,8 +46,7 @@ func AddOrUpdateResponseInfoHtml(c *gin.Context) {
 }
 
 func IndexHtml(c *gin.Context) {
-	tmp := util.Reverse(cache.GetAllHistoryList())
-	c.HTML(http.StatusOK, "index.html", tmp)
+	c.HTML(http.StatusOK, "index.html", cache.GetAllHistoryList())
 }
 func UpdateResponseInfoHtml(c *gin.Context) {
 	responseId, _ := c.GetQuery("id")
@@ -83,4 +82,13 @@ func FormatTime(t int64) string {
 	tm := time.Unix(t, 0)
 	format := tm.Format("2006-01-02 15:04:05")
 	return format
+}
+func FormatParams(p map[string][]string) (str string) {
+	sp := ""
+	for k, v := range p {
+		bytes, _ := json.Marshal(v)
+		str = str + sp + k + ":" + string(bytes)
+		sp = "&"
+	}
+	return
 }

@@ -3,6 +3,7 @@ package cache
 import (
 	"errors"
 	"github.com/xingliuhua/easyserver/model"
+	"sort"
 )
 
 var historyList = make([]model.RequestHistory, 0)
@@ -14,10 +15,10 @@ func AddHistory2Cache(history model.RequestHistory) {
 	if len(historyList) > HISTORY_MAX_COUNT {
 		key := historyList[0].UrlPath
 		delete(historyKeyMap, key)
-		historyList = historyList[1:]
+		historyList = historyList[:len(historyList)-1]
 	}
 	historyKeyMap[history.UrlPath] = nil
-	historyList = append(historyList, history)
+	historyList = append([]model.RequestHistory{history}, historyList...)
 }
 func GetHistoryById(historyId string) (err error, history model.RequestHistory) {
 	for _, v := range historyList {
@@ -38,17 +39,22 @@ func HasConfigedRequest(key string) bool {
 var responseInfoList = make([]*model.ResponseInfo, 0)
 var responseInfoKeyMap = make(map[string]interface{})
 
-const responseInfo_MAX_COUNT = 100
+const RESPONSEINFO_MAX_COUNT = 100
 
+func SortResponseInfoList() {
+	sort.Slice(responseInfoList, func(i, j int) bool {
+		return responseInfoList[i].Time > responseInfoList[j].Time
+	})
+}
 func AddResponseInfo2Cache(info model.ResponseInfo) {
 
-	if len(responseInfoList) > responseInfo_MAX_COUNT {
+	if len(responseInfoList) > RESPONSEINFO_MAX_COUNT {
 		key := responseInfoList[0].UrlPath
 		delete(responseInfoKeyMap, key)
 		responseInfoList = responseInfoList[1:]
 	}
 	responseInfoKeyMap[info.Key] = nil
-	responseInfoList = append(responseInfoList, &info)
+	responseInfoList = append([]*model.ResponseInfo{&info}, responseInfoList...)
 }
 func UpdateResponseInfo2Cache(info model.ResponseInfo) {
 	for _, v := range responseInfoList {
