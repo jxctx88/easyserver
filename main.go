@@ -16,10 +16,10 @@ var runed bool
 func main() {
 	//gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
-	r.POST("/mock/responses", handler.AddResponseInfo)
-	r.DELETE("/mock/responses/:id", handler.DelResponseInfo)
-	r.PUT("/mock/responses", handler.UpdateResponseInfo)
-	r.Static("/mock/static", "./static")
+	r.POST("/easyserver/responses", handler.AddResponseInfo)
+	r.DELETE("/easyserver/responses/:id", handler.DelResponseInfo)
+	r.PUT("/easyserver/responses", handler.UpdateResponseInfo)
+	r.Static("/easyserver/static", "./static")
 	r.SetFuncMap(template.FuncMap{
 		"subLongText":  handler.SubLongText,
 		"formatTime":   handler.FormatTime,
@@ -27,10 +27,10 @@ func main() {
 	})
 	r.LoadHTMLGlob("static/html/*.html")
 	//r.LoadHTMLFiles("static/html/index.html", "static/html/add.html", "static/html/config.html")
-	r.GET("/mock/index", handler.IndexHtml)
-	r.GET("/mock/add", handler.AddOrUpdateResponseInfoHtml)
-	r.GET("/mock/edit", handler.UpdateResponseInfoHtml)
-	r.GET("/mock/config", handler.ConfigHtml)
+	r.GET("/easyserver/index", handler.IndexHtml)
+	r.GET("/easyserver/add", handler.AddOrUpdateResponseInfoHtml)
+	r.GET("/easyserver/edit", handler.UpdateResponseInfoHtml)
+	r.GET("/easyserver/config", handler.ConfigHtml)
 
 	// not found router
 	r.NoRoute(handler.HandleAll)
