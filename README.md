@@ -1,4 +1,4 @@
-[English](https://github.com/xingliuhua/easyserver/blob/master/README.cn.md)
+[中文版](https://github.com/xingliuhua/easyserver/blob/master/README.cn.md)
 # easyserver
 
 A light but powerful simulation server desktop program.
