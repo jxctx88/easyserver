@@ -24,13 +24,14 @@
 * 能对请求设置返回信息，自动返回信息。
 * 返回信息自动保存到磁盘，下次启动自动加载。
 * 请求方式 + 接口地址 + 所有参数 这些都完全相同才认为是同一请求。
-* 同时GUI操作和文件配置，使用简单。
+* 同时支持GUI操作和文件配置，使用简单。
 * 支持多人在线配置并使用。
 * 小巧轻便，占用内存少。
 * 支持mac、window，linux。
 
 ## 安装
 1. 下载对应平台的zip包。
+[mac](https://github.com/xingliuhua/easyserver/blob/master/easyserver_mac_v1.0.tar.gz)
 2. 解压缩即可，不需要按照任何依赖。
 
 ## 使用
@@ -46,12 +47,15 @@
 我们看到会出现一个对话框出来了，我们可以改动要监听的端口。
 比如我们想要模拟：http://test:8888/login接口，我们就输入8888即可。
 点击Run按钮（点击后鼠标离开即可看到按钮状态变化）
+
 3. 浏览器打开localhost:8888/easyserver/index
 
 <img src="https://github.com/xingliuhua/easyserver/blob/master/easyserver_pic_index.png">
 前端或app请求http://test:8888/login接口，刷新网页，我们就可以看到请求记录了,
 点击右边的修改图标进入到添加页面，修改返回信息提交，这样我们就设置了一个请求的返回信息。后面再次请求登录接口就返回了想要的信息。
+
 4. 点击index页面的config链接，我们可以看到以前配置的请求列表，支持修改，删除。
+
 5. 不想使用可直接点击关闭，想暂时关闭请点击"Stop"按钮。
 
 ## 优化
