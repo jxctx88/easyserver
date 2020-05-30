@@ -34,10 +34,11 @@ But we also found some shortcomings:
 1. Download the zip package of the corresponding platform.
 
 [mac](https://github.com/xingliuhua/easyserver/blob/master/easyserver_mac_v1.0.tar.gz)
+[windows-64](https://github.com/xingliuhua/easyserver/blob/master/easyserver_windows_v1.0.zip)
 
 2. Decompress it without any dependency.
 
-## Decompress it without any dependency.
+## Usage
 
 1. Command line start
 Run after decompression
