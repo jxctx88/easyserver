@@ -47,15 +47,17 @@
 <img src="https://github.com/xingliuhua/easyserver/blob/master/easyserver_pic_run.png"  >
 
 我们看到会出现一个对话框出来了，我们可以改动要监听的端口。
-比如我们想要模拟：http://test:8888/login接口，我们就输入8888即可。
+比如我们想要模拟：http://test:8888/login 接口，我们就输入8888即可。
 点击Run按钮（点击后鼠标离开即可看到按钮状态变化）
 
-3. 浏览器打开localhost:8888/easyserver/index
+3. 浏览器打开 http://localhost:8888/easyserver/index
 
 <img src="https://github.com/xingliuhua/easyserver/blob/master/easyserver_pic_index.png">
-前端或app请求http://test:8888/login接口，刷新网页，我们就可以看到请求记录了,
+
+前端或app请求http://xxxx:8888/login接口，刷新网页，我们就可以看到请求记录了,其中"xxxx"是本机的IP地址,
 点击右边的修改图标进入到添加页面，修改返回信息提交，这样我们就设置了一个请求的返回信息。后面再次请求登录接口就返回了想要的信息。
 
+`注意：app请求的时候url要写easyserver所运行的电脑IP地址，只有这样你才能访问得到`
 4. 点击index页面的config链接，我们可以看到以前配置的请求列表，支持修改，删除。
 
 5. 不想使用可直接点击关闭，想暂时关闭请点击"Stop"按钮。

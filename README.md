@@ -51,13 +51,13 @@ Run after decompression
 
 We see that a dialog box will appear. We can change the port to be monitored.
 
-For example, we want to simulate: http://test : 8888 / login interface, we can input 8888.
+For example, we want to simulate: http://test:8888/login interface, we can input 8888.
 Click the run button (you can see the button status change after clicking the mouse to leave)
 
-3. Browser open localhost:8888/easyserver/index
+3. Browser open http://localhost:8888/easyserver/index
 
 <img src="https://github.com/xingliuhua/easyserver/blob/master/easyserver_pic_index.png">
-Front end or app request http://test : 8888 / login interface, refresh the webpage, we can see the request record,
+Front end or app request http://xxxx:8888/login interface, refresh the webpage, we can see the request record,xxxx is easyserver IP.
 Click the modify icon on the right to enter the add page, modify the return information submission, so we set a request return information. Later, requesting the login interface again returns the desired information.
 
 4. Click the config link on the index page to see the list of previously configured requests, which supports modification and deletion.
