@@ -31,6 +31,7 @@
 
 ## 安装
 1. 下载对应平台的zip包。
+
 [mac](https://github.com/xingliuhua/easyserver/blob/master/easyserver_mac_v1.0.tar.gz)
 
 [windows-64](https://github.com/xingliuhua/easyserver/blob/master/easyserver_windows_v1.0.zip)
