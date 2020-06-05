@@ -36,7 +36,7 @@
 
 [windows-64](https://github.com/xingliuhua/easyserver/blob/master/easyserver_windows_v1.0.zip)
 
-2. 解压缩即可，不需要按照任何依赖。
+2. 解压缩即可，不需要安装任何依赖。
 
 ## 使用
 以mac为例，
