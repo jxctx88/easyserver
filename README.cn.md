@@ -35,6 +35,7 @@
 [mac](https://github.com/xingliuhua/easyserver/blob/master/easyserver_mac_v1.0.tar.gz)
 
 [windows-64](https://github.com/xingliuhua/easyserver/blob/master/easyserver_windows_v1.0.zip)
+
 2. 解压缩即可，不需要按照任何依赖。
 
 ## 使用
